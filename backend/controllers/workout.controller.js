@@ -7,7 +7,7 @@ const getWorkouts = async (req, res) => {
 const addWorkout = async (req, res) => {
   const { title, reps, load } = req.body;
   try {
-    console.log(title,reps,load);
+    console.log(title, reps, load);
     const workouts = await workoutModel.create({ title, reps, load });
     res.json(workouts);
   } catch (er) {
@@ -15,16 +15,30 @@ const addWorkout = async (req, res) => {
   }
 };
 const getWorkout = async (req, res) => {
-  const workouts = await workoutModel.find();
-  res.json(workouts);
+  const id = req.params.id;
+  const workout = await workoutModel.findById(id).select("_id title reps load");
+  res.json(workout);
 };
 const updateWorkout = async (req, res) => {
-  const workouts = await workoutModel.find();
-  res.json(workouts);
+  const id = req.params.id;
+  const { title, reps, load } = req.body;
+
+  const workout = await workoutModel.findByIdAndUpdate(id, {
+    title,
+    reps,
+    load,
+  });
+  res.json(workout);
 };
 const deleteWorkout = async (req, res) => {
-  const workouts = await workoutModel.find();
-  res.json(workouts);
+  const id = req.params.id;
+  const workout = await workoutModel.findById(id);
+  if (workout) {
+    await workout.remove();
+    res.json(workout);
+  } else {
+    res.status(404).send("workout not found");
+  }
 };
 
 module.exports = {
