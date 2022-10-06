@@ -1,19 +1,10 @@
 const workoutRoute = require("express").Router();
+const workoutController = require("../controllers/workout.controller");
 
-workoutRoute.get("/", (req, res) => {
-  res.send("get workouts");
-});
-workoutRoute.post("/", (req, res) => {
-    res.send("post workouts");
-  });
-  workoutRoute.get("/:id", (req, res) => {
-    res.send("get workouts");
-  });
-  workoutRoute.delete("/:id", (req, res) => {
-    res.send("get workouts");
-  });
-  workoutRoute.patch("/:id", (req, res) => {
-    res.send("get workouts");
-  });
+workoutRoute.get("/", workoutController.getWorkouts);
+workoutRoute.post("/", workoutController.addWorkout);
+workoutRoute.get("/:id", workoutController.getWorkout);
+workoutRoute.delete("/:id", workoutController.deleteWorkout);
+workoutRoute.patch("/:id", workoutController.updateWorkout);
 
 module.exports = workoutRoute;
