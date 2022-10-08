@@ -1,7 +1,7 @@
 const workoutModel = require("../models/workout.schema");
 
 const getWorkouts = async (req, res) => {
-  const workouts = await workoutModel.find().select("_id title reps load");
+  const workouts = await workoutModel.find().select("_id title reps load createdAt");
   res.json(workouts);
 };
 const addWorkout = async (req, res) => {
